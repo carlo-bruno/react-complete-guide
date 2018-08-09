@@ -27,8 +27,8 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Udemy Course: React 16 -  Maximilian Schwarzmüller </h1>
-        <button onClick={() => this.switchNameHandler('Joseph!')}> // ? can be inefficient
-          Switch Name</button>
+        <button onClick={() => this.switchNameHandler('Joseph!')}>
+          Switch Name</button> {/* can be inefficient */}
         <Person 
           name={ this.state.persons[0].name } 
           age={ this.state.persons[0].age } />
