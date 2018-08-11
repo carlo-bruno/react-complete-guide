@@ -51,6 +51,28 @@ class App extends Component {
       cursor: 'pointer'
     };
 
+    let persons = null; // ? default output of return
+
+    if ( this.state.showPersons ) { // ? check before returning
+      persons = (
+        <div>
+          <Person 
+            name={ this.state.persons[0].name } 
+            age={ this.state.persons[0].age } />
+          <Person 
+            name={ this.state.persons[1].name } 
+            age ={ this.state.persons[1].age }
+            click={this.switchNameHandler.bind(this, 'Jo-Jo!!!')}
+            changed={this.nameChangedHandler} 
+            > My Hobbies: Lumberjacking
+          </Person>
+          <Person 
+            name={ this.state.persons[2].name } 
+            age={ this.state.persons[2].age }/>
+        </div>
+      )
+    }
+
     return (
       <div className="App">
         <h1>Udemy Course: React 16 -  Maximilian Schwarzmüller </h1>
@@ -58,23 +80,8 @@ class App extends Component {
           style={style} 
           onClick={this.togglePersonsHandler}>
           Switch Name</button> {/* can be inefficient */}
-        { this.state.showPersons === true ? 
-            <div>
-              <Person 
-                name={ this.state.persons[0].name } 
-                age={ this.state.persons[0].age } />
-              <Person 
-                name={ this.state.persons[1].name } 
-                age ={ this.state.persons[1].age }
-                click={this.switchNameHandler.bind(this, 'Jo-Jo!!!')}
-                changed={this.nameChangedHandler} 
-                > My Hobbies: Lumberjacking
-              </Person>
-              <Person 
-                name={ this.state.persons[2].name } 
-                age={ this.state.persons[2].age }/>
-            </div> : null
-        }
+          {persons}
+
       </div>
     );
   };
