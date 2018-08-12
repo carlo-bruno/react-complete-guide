@@ -5,9 +5,9 @@ import Person from './Person/Person';
 class App extends Component {
   state = {
     persons : [
-      { name: "Joe", age: 28 },
-      { name: "Jack", age: 32 },
-      { name: "Rachel", age: 22 }
+      { id: 'a001', name: "Joe", age: 28 },
+      { id: 'a002', name: "Jack", age: 32 },
+      { id: 'a003', name: "Rachel", age: 22 }
     ]
   };
 
@@ -20,16 +20,28 @@ class App extends Component {
     //! note: state persons <-- new persons 
   };
 
-  nameChangedHandler = (event) => {
-    this.setState( { 
-      persons: [ 
-        { id: 'a001', name: "Joe", age: 28 },
-        { id: 'a002', name: event.target.value, age: 32 },
-        { id: 'a003', name: "Rachel", age: 22 }
-      ],
-      otherState: 'some other value',
-      showPersons: false
-    } )
+  nameChangedHandler = (event, id) => {
+    //* to change state of the single person
+    //? get the index of person that matches the id
+    //? .findIndex()
+    const personIndex = this.state.persons.findIndex(human => {
+      return human.id === id;
+    });
+    //? select the person from state array using the person index
+    //? spread method to not mutate the original array
+    const person = {...this.state.persons[personIndex]};
+    
+    //? now change the name using the event value
+    person.name = event.target.value;
+    
+    //? grab copy of state array
+    const persons = [...this.state.persons];
+    //? update the 'copy' array with the updated 'person'
+    persons[personIndex] = person;
+
+    //* now update state
+    //! note: state persons <-- copy persons
+    this.setState( { persons: persons });
   }
 
   togglePersonsHandler = () => {
@@ -56,8 +68,9 @@ class App extends Component {
             return <Person
               click={() => this.deletePersonHandler(index)}
               name={person.name}
-              age={person.age} 
-              key={person.id} />
+              age={person.age}
+              key={person.id}
+              changed={(event) => this.nameChangedHandler(event, person.id)} />
           })}
         </div>
       )
