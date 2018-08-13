@@ -13,11 +13,11 @@ class App extends Component {
 
   deletePersonHandler = (personIndex) => {
     // const persons = this.state.persons.slice(); //? new array from state
-    const persons = [...this.state.persons]; //* es6 using spread
+    const persons = [...this.state.persons]; //* es6 using spread, copy array
 
     persons.splice(personIndex, 1);   //? splice clicked item
     this.setState({persons: persons}); //? set the state to new array
-    //! note: state persons <-- new persons 
+    //! note: state persons <-- copy persons 
   };
 
   nameChangedHandler = (event, id) => {
@@ -28,7 +28,7 @@ class App extends Component {
       return human.id === id;
     });
     //? select the person from state array using the person index
-    //? spread method to not mutate the original array
+    //? create person copy using spread method to not mutate the original array
     const person = {...this.state.persons[personIndex]};
     
     //? now change the name using the event value
@@ -40,8 +40,8 @@ class App extends Component {
     persons[personIndex] = person;
 
     //* now update state
-    //! note: state persons <-- copy persons
     this.setState( { persons: persons });
+    //! note: state persons <-- copy persons
   }
 
   togglePersonsHandler = () => {
@@ -52,13 +52,17 @@ class App extends Component {
   render() {
     // ? inline style
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
-      border: '1px solid blue',
+      border: '1px solid gray',
+      borderRadius: '3px',
+      boxShadow: '3px 5px 5px #ccc',
       padding: '8px',
       cursor: 'pointer'
     };
 
+    //* conditional rendering
     let persons = null; // ? default output of return
 
     if ( this.state.showPersons ) { // ? check before returning
@@ -74,11 +78,24 @@ class App extends Component {
           })}
         </div>
       )
+      style.backgroundColor = 'red'; //? dynamically changing color of button when toggled
+    }
+
+    //* adding css class dynamically
+    let classes =[];
+    if (this.state.persons.length <= 2) {
+      classes.push('red'); //? 2 person cards, class = 'red'
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('bold'); //? 1 or less person card, class = 'red bold'
     }
 
     return (
       <div className="App">
-        <h1>Udemy Course: React 16 -  Maximilian Schwarzmüller </h1>
+        <h1>React 16 -  Maximilian Schwarzmüller </h1>
+        <p className={classes.join(' ')}>Udemy Course</p>
+        {/* since 'classes is an array, use join(' ') */}
+        
         <button
           style={style} 
           onClick={this.togglePersonsHandler}>
