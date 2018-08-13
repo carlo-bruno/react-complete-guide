@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Radium from 'radium';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -59,7 +60,12 @@ class App extends Component {
       borderRadius: '3px',
       boxShadow: '3px 5px 5px #ccc',
       padding: '8px',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      //? Radium allows use of CSS pseudoselectors
+      ':hover': { //? wrap in ' ' to use : in js object
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     };
 
     //* conditional rendering
@@ -79,6 +85,10 @@ class App extends Component {
         </div>
       )
       style.backgroundColor = 'red'; //? dynamically changing color of button when toggled
+      style[':hover'] = { //? user ['string'] notation to call
+        backgroundColor: 'salmon',
+        color: 'black'
+      }
     }
 
     //* adding css class dynamically
@@ -107,4 +117,4 @@ class App extends Component {
   };
 }
 
-export default App;
+export default Radium(App);
