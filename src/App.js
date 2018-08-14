@@ -50,20 +50,9 @@ class App extends Component {
   }
 
   render() {
-    // ? inline style
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid gray',
-      borderRadius: '3px',
-      boxShadow: '3px 5px 5px #ccc',
-      padding: '8px',
-      cursor: 'pointer'
-    };
-
     //* conditional rendering
     let persons = null; // ? default output of return
+    let btnClass = ''; //? create var to assign inside if condition
 
     if ( this.state.showPersons ) { // ? check before returning
       persons = (
@@ -77,8 +66,10 @@ class App extends Component {
               changed={(event) => this.nameChangedHandler(event, person.id)} />
           })}
         </div>
-      )
-      style.backgroundColor = 'red'; //? dynamically changing color of button when toggled
+      );
+      btnClass = classes.Red;
+      //? when button is toggled, change value
+      //! classes.Red is tied to the App.css selectors, will generate a class name that is scoped only to this file
     }
 
     //* adding css class dynamically
@@ -99,7 +90,7 @@ class App extends Component {
         {/* since 'classes is an array, use join(' ') */}
         
         <button
-          style={style} 
+          className={btnClass} //! see ln 70
           onClick={this.togglePersonsHandler}>
           Show Persons</button> {/* can be inefficient */}
           {persons}
