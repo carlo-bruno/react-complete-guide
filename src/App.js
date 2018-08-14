@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import Radium, { StyleRoot } from 'radium';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -60,12 +59,7 @@ class App extends Component {
       borderRadius: '3px',
       boxShadow: '3px 5px 5px #ccc',
       padding: '8px',
-      cursor: 'pointer',
-      //? Radium allows use of CSS pseudoselectors
-      ':hover': { //? wrap in ' ' to use : in js object
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
+      cursor: 'pointer'
     };
 
     //* conditional rendering
@@ -85,10 +79,6 @@ class App extends Component {
         </div>
       )
       style.backgroundColor = 'red'; //? dynamically changing color of button when toggled
-      style[':hover'] = { //? user ['string'] notation to call
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
     }
 
     //* adding css class dynamically
@@ -101,8 +91,6 @@ class App extends Component {
     }
 
     return (
-      //* Radium: to allow use of media queries and keyframes, import {StyleRoot}, line 3 
-      <StyleRoot> 
       <div className="App">
         <h1>React 16 -  Maximilian Schwarzmüller </h1>
         <p className={classes.join(' ')}>Udemy Course</p>
@@ -113,11 +101,9 @@ class App extends Component {
           onClick={this.togglePersonsHandler}>
           Show Persons</button> {/* can be inefficient */}
           {persons}
-
       </div>
-      </StyleRoot>
     );
   };
 }
 
-export default Radium(App);
+export default App;
