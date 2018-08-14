@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -82,18 +82,20 @@ class App extends Component {
     }
 
     //* adding css class dynamically
-    let classes =[];
+    //! css module: renamed classes to assignedClasses
+    let assignedClasses =[];
     if (this.state.persons.length <= 2) {
-      classes.push('red'); //? 2 person cards, class = 'red'
+      assignedClasses.push( classes.red ); //? 2 person cards, class = 'red'
+      //! css module: instead of passing css selector, use classes object, see ln 2
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold'); //? 1 or less person card, class = 'red bold'
+      assignedClasses.push(classes.bold); //? 1 or less person card, class = 'red bold'
     }
 
     return (
-      <div className="App">
+      <div className={classes.App}>
         <h1>React 16 -  Maximilian Schwarzmüller </h1>
-        <p className={classes.join(' ')}>Udemy Course</p>
+        <p className={assignedClasses.join(' ')}>Udemy Course</p>
         {/* since 'classes is an array, use join(' ') */}
         
         <button
