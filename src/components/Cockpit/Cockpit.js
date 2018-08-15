@@ -24,6 +24,7 @@ const cockpit = (props) => {
 
   return (
     <div className={classes.Cockpit}>
+      <h2>{props.appTitle}</h2>
       <h1>React 16 -  Maximilian Schwarzmüller </h1>
       <p className={assignedClasses.join(' ')}>Udemy Course</p>
       {/* since 'classes is an array, use join(' ') */}

@@ -9,7 +9,10 @@ class App extends Component {
     persons : [
       { id: 'a001', name: "Joe", age: 28 },
       { id: 'a002', name: "Jack", age: 32 },
-      { id: 'a003', name: "Rachel", age: 22 }
+      { id: 'a003', name: "Rachel", age: 22 },
+      { id: 'a004', name: "Jill", age: 27 },
+      { id: 'a005', name: "Rock", age: 21 }
+      
     ]
   };
 
@@ -67,6 +70,7 @@ class App extends Component {
     return (
       <div className={classes.App}>
           <Cockpit 
+            appTitle={this.props.title} //! using this.props, built-in props from {Components}
             showPersons={this.state.showPersons}
             persons={this.state.persons}
             clicked={this.togglePersonsHandler}/>
