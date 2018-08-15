@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -50,54 +51,48 @@ class App extends Component {
   }
 
   render() {
-    // ? inline style
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      border: '1px solid gray',
-      borderRadius: '3px',
-      boxShadow: '3px 5px 5px #ccc',
-      padding: '8px',
-      cursor: 'pointer'
-    };
-
     //* conditional rendering
     let persons = null; // ? default output of return
+    let btnClass = ''; //? create var to assign inside if condition
 
     if ( this.state.showPersons ) { // ? check before returning
       persons = (
         <div>
           {this.state.persons.map((person, index) => { // ? rendering array using .map()
-            return <Person
-              click={() => this.deletePersonHandler(index)}
-              name={person.name}
-              age={person.age}
-              key={person.id}
-              changed={(event) => this.nameChangedHandler(event, person.id)} />
+            return <ErrorBoundary key={person.id}>
+              <Person
+                click={() => this.deletePersonHandler(index)}
+                name={person.name}
+                age={person.age}
+                changed={(event) => this.nameChangedHandler(event, person.id)} /> 
+              </ErrorBoundary>
           })}
         </div>
-      )
-      style.backgroundColor = 'red'; //? dynamically changing color of button when toggled
+      );
+      btnClass = classes.Red;
+      //? when button is toggled, change value
+      //! classes.Red is tied to the App.css selectors, will generate a class name that is scoped only to this file
     }
 
     //* adding css class dynamically
-    let classes =[];
+    //! css module: renamed classes to assignedClasses
+    let assignedClasses =[];
     if (this.state.persons.length <= 2) {
-      classes.push('red'); //? 2 person cards, class = 'red'
+      assignedClasses.push( classes.red ); //? 2 person cards, class = 'red'
+      //! css module: instead of passing css selector, use classes object, see ln 2
     }
     if (this.state.persons.length <= 1) {
-      classes.push('bold'); //? 1 or less person card, class = 'red bold'
+      assignedClasses.push(classes.bold); //? 1 or less person card, class = 'red bold'
     }
 
     return (
-      <div className="App">
+      <div className={classes.App}>
         <h1>React 16 -  Maximilian Schwarzmüller </h1>
-        <p className={classes.join(' ')}>Udemy Course</p>
+        <p className={assignedClasses.join(' ')}>Udemy Course</p>
         {/* since 'classes is an array, use join(' ') */}
         
         <button
-          style={style} 
+          className={btnClass} //! see ln 70
           onClick={this.togglePersonsHandler}>
           Show Persons</button> {/* can be inefficient */}
           {persons}
