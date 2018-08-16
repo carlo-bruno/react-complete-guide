@@ -5,6 +5,22 @@ import Cockpit from '../components/Cockpit/Cockpit';
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    console.log('[App.js] Inside Constructor', props );
+    // this.state = {
+       //! This works too
+    // }
+  }
+
+  componentWillMount() {
+    console.log('[App.js] Inside componentWillMount()');
+  }
+
+  componentDidMount() {
+    console.log('[App.js] Inside componentDidMount');
+  }
+
   state = {
     persons : [
       { id: 'a001', name: "Joe", age: 28 },
@@ -12,8 +28,9 @@ class App extends Component {
       { id: 'a003', name: "Rachel", age: 22 },
       { id: 'a004', name: "Jill", age: 27 },
       { id: 'a005', name: "Rock", age: 21 }
-      
-    ]
+    ],
+    otherState: 'some other value',
+    showPersons: false
   };
 
   deletePersonHandler = (personIndex) => {
@@ -55,6 +72,7 @@ class App extends Component {
   }
 
   render() {
+    console.log('[App.js] Inside render()')
     //* conditional rendering
     let persons = null; // ? default output of return
 
